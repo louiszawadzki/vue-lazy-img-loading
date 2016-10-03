@@ -3,7 +3,22 @@ Vue.component('lazy-image-loading', {
     'src',
     'smallSrc'
   ],
-  template: '<img src=\"{{ smallSrc }}\"></img>'
+  data: function () {
+    return {
+      imageSrc: this.smallSrc
+    }
+  },
+  template: '<img src=\"{{ imageSrc }}\"></img>',
+  ready: function () {
+    var img, that;
+    img = new Image();
+    img.src = this.src;
+    that = this;
+
+    img.onload = function(){
+      that.imageSrc = that.src;
+    }
+  }
 })
 
 new Vue({
